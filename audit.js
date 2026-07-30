@@ -134,6 +134,21 @@ export async function runAudit(rawInput) {
       : "When someone shares a link to your website on Facebook or LinkedIn, the preview may look broken, blank, or generic — which makes people less likely to click.",
   });
 
+  // --- Twitter Card ---
+  const twitterCard = $('meta[name="twitter:card"]').attr("content");
+  checks.push({
+    id: "twitter_card",
+    label: "X (Twitter) previews",
+    category: "social_sharing",
+    impact: "low",
+    action: "Fix how your site previews on X",
+    passed: Boolean(twitterCard),
+    weight: CHECK_WEIGHT,
+    detail: twitterCard
+      ? "Your website previews correctly when a link to it is shared on X."
+      : "Links to your website may not preview correctly when shared on X — a small but easy fix.",
+  });
+
   // --- Schema / structured data ---
   const schemaBlocks = $('script[type="application/ld+json"]');
   checks.push({
