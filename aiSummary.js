@@ -1,39 +1,51 @@
 // aiSummary.js
-// Turns a list of raw check results into a short, prioritized, human-friendly
-// action plan. Uses the Anthropic API if ANTHROPIC_API_KEY is set; otherwise
-// falls back to a simple rule-based summary so the app still works out of the box.
+// Turns raw check results into a short, ranked list of "Growth Opportunities" —
+// the consultant-style recommendations shown on the dashboard.
+// Uses the Anthropic API if ANTHROPIC_API_KEY is set; otherwise falls back to a
+// rule-based ranking so the app still works out of the box.
 
 const MODEL = "claude-sonnet-4-6";
+const IMPACT_RANK = { high: 0, medium: 1, low: 2 };
 
-function fallbackSummary(audit) {
+function fallbackOpportunities(audit) {
   const failed = audit.checks.filter((c) => !c.passed);
-  if (failed.length === 0) {
-    return "Nice work — every check on this scan passed. Consider re-running BrandScanr periodically to catch anything that changes.";
-  }
-  const top = failed.slice(0, 5);
-  const lines = top.map(
-    (c, i) => `${i + 1}. **${c.label}** — ${c.detail}`
+  const sorted = [...failed].sort(
+    (a, b) => (IMPACT_RANK[a.impact] ?? 3) - (IMPACT_RANK[b.impact] ?? 3)
   );
-  return `Here are the top things to fix first:\n\n${lines.join("\n\n")}`;
+  return sorted.slice(0, 5).map((c) => ({
+    title: c.action || c.label,
+    impact: c.impact || "medium",
+    why: c.detail,
+  }));
 }
 
-export async function generateSummary(audit) {
+export async function generateOpportunities(audit) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
+  const fallback = fallbackOpportunities(audit);
 
-  if (!apiKey) {
-    return { text: fallbackSummary(audit), source: "fallback" };
+  if (!apiKey || fallback.length === 0) {
+    return { opportunities: fallback, source: fallback.length ? "fallback" : "none" };
   }
 
   const findings = audit.checks
-    .map((c) => `- [${c.passed ? "PASS" : "FAIL"}] ${c.label}: ${c.detail}`)
+    .map(
+      (c) =>
+        `- [${c.passed ? "PASS" : "FAIL"}] ${c.label} (impact if fixed: ${c.impact}): ${c.detail}`
+    )
     .join("\n");
 
-  const prompt = `You are a senior digital marketing consultant reviewing an automated website audit for a small business at ${audit.url}.
+  const prompt = `You are a friendly digital marketing consultant reviewing an automated website audit for a small business at ${audit.url}.
 
-Here are the raw findings:
+Raw findings:
 ${findings}
 
-Write a short, encouraging, plain-English summary (150-250 words) for a busy small business owner who is not technical. Focus on the failed checks. Rank the top issues by likely business impact, explain briefly why each matters, and end with the single most important next step. Do not use marketing jargon.`;
+Pick the top 5 FAILED items most worth fixing, ranked by business impact. For each, write:
+- "title": a short action the owner should take (plain English, no jargon, starts with a verb)
+- "impact": one of "high", "medium", "low"
+- "why": 1-2 plain-English sentences on why it matters to customers or visibility (no technical jargon like "meta tags" or "schema")
+
+Respond with ONLY a JSON array, nothing else, in this exact shape:
+[{"title": "...", "impact": "high", "why": "..."}]`;
 
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -45,13 +57,13 @@ Write a short, encouraging, plain-English summary (150-250 words) for a busy sma
       },
       body: JSON.stringify({
         model: MODEL,
-        max_tokens: 600,
+        max_tokens: 700,
         messages: [{ role: "user", content: prompt }],
       }),
     });
 
     if (!res.ok) {
-      return { text: fallbackSummary(audit), source: "fallback" };
+      return { opportunities: fallback, source: "fallback" };
     }
 
     const data = await res.json();
@@ -60,12 +72,15 @@ Write a short, encouraging, plain-English summary (150-250 words) for a busy sma
       .join("\n")
       .trim();
 
-    if (!text) {
-      return { text: fallbackSummary(audit), source: "fallback" };
+    const cleaned = text?.replace(/^```json\s*|```$/g, "").trim();
+    const parsed = JSON.parse(cleaned);
+
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      return { opportunities: fallback, source: "fallback" };
     }
 
-    return { text, source: "ai" };
+    return { opportunities: parsed.slice(0, 5), source: "ai" };
   } catch (err) {
-    return { text: fallbackSummary(audit), source: "fallback" };
+    return { opportunities: fallback, source: "fallback" };
   }
 }
