@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrandScanr — Scan your business's online presence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="scan-grid" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="wordmark">
+      <span class="wordmark-icon">◎</span>
+      <span>BrandScanr</span>
+    </div>
+    <p class="tagline">A marketing scan for your business, in plain English.</p>
+  </header>
+
+  <main>
+    <section class="scanner" id="scanner">
+      <h1>See how your business appears online.</h1>
+      <p class="sub">BrandScanr uses AI to analyze your website and uncover opportunities to improve your brand, visibility, and customer experience.</p>
+
+      <form id="scan-form" class="scan-form">
+        <input
+          id="url-input"
+          type="text"
+          placeholder="sweettreatsbakery.com"
+          autocomplete="off"
+          spellcheck="false"
+          required
+        />
+        <button type="submit" id="scan-button">
+          <span class="btn-label">Analyze My Brand</span>
+        </button>
+      </form>
+
+      <p id="form-error" class="form-error" hidden></p>
+    </section>
+
+    <section id="results" class="results" hidden>
+      <div class="score-panel">
+        <div class="gauge-wrap">
+          <svg id="gauge" viewBox="0 0 200 200" class="gauge">
+            <circle cx="100" cy="100" r="86" class="gauge-track" />
+            <circle cx="100" cy="100" r="86" class="gauge-fill" id="gauge-fill" />
+            <line x1="100" y1="100" x2="100" y2="24" class="gauge-sweep" id="gauge-sweep" />
+          </svg>
+          <div class="gauge-center">
+            <span id="score-number" class="score-number">--</span>
+            <span class="score-max">/ 100</span>
+          </div>
+        </div>
+        <div class="score-meta">
+          <p class="score-label">Brand Health Score</p>
+          <p id="score-url" class="score-url"></p>
+          <p id="score-verdict" class="score-verdict"></p>
+        </div>
+      </div>
+
+      <div class="categories-grid" id="categories-grid"></div>
+
+      <div class="opportunities-panel">
+        <h2>Your Top Growth Opportunities</h2>
+        <div id="opportunities-list" class="opportunities-list"></div>
+      </div>
+
+      <div class="checks-panel">
+        <h2>Full scan details</h2>
+        <ul id="checks-list" class="checks-list"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
