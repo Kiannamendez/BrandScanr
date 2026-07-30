@@ -292,139 +292,7 @@ main {
   line-height: 1.5;
 }
 
-/* --- Category breakdown --- */
-
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 0.9rem;
-}
-
-.category-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1.1rem 1.2rem;
-}
-
-.category-top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 0.4rem;
-}
-
-.category-label {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-}
-
-.category-score {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 1.15rem;
-}
-
-.category-verdict {
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.45;
-  color: var(--text);
-}
-
-/* --- Growth opportunities --- */
-
-.opportunities-panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 1.75rem;
-}
-
-.opportunities-panel h2 {
-  margin: 0 0 1rem;
-  font-size: 1rem;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-}
-
-.opportunities-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.opportunity-card {
-  background: var(--surface-raised);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1rem 1.1rem;
-}
-
-.opportunity-top {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 0.4rem;
-  flex-wrap: wrap;
-}
-
-.opportunity-rank {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  color: var(--signal);
-  font-size: 0.9rem;
-  min-width: 1.2rem;
-}
-
-.opportunity-title {
-  font-weight: 600;
-  flex: 1;
-  min-width: 140px;
-}
-
-.opportunity-impact {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-  white-space: nowrap;
-}
-
-.impact-high {
-  background: rgba(242, 87, 74, 0.15);
-  color: var(--danger);
-}
-
-.impact-medium {
-  background: rgba(242, 184, 74, 0.15);
-  color: var(--warn);
-}
-
-.impact-low {
-  background: rgba(128, 145, 174, 0.2);
-  color: var(--muted);
-}
-
-.opportunity-why {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
-
-.no-opportunities {
-  color: var(--muted);
-  margin: 0;
-}
-
+.summary-panel,
 .checks-panel {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -432,6 +300,7 @@ main {
   padding: 1.75rem;
 }
 
+.summary-panel h2,
 .checks-panel h2 {
   margin: 0 0 1rem;
   font-size: 1rem;
@@ -439,6 +308,11 @@ main {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--muted);
+}
+
+.summary-text {
+  line-height: 1.65;
+  white-space: pre-wrap;
 }
 
 .checks-list {

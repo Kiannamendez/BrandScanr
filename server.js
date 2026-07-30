@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import "dotenv/config";
 
 import { runAudit } from "./audit.js";
-import { generateOpportunities } from "./aiSummary.js";
+import { generateSummary } from "./aiSummary.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -25,9 +25,9 @@ app.post("/api/scan", async (req, res) => {
     return res.status(422).json({ error: audit.error });
   }
 
-  const { opportunities, source } = await generateOpportunities(audit);
+  const summary = await generateSummary(audit);
 
-  res.json({ ...audit, opportunities, opportunitiesSource: source });
+  res.json({ ...audit, summary: summary.text, summarySource: summary.source });
 });
 
 app.listen(PORT, () => {

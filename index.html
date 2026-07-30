@@ -21,8 +21,8 @@
 
   <main>
     <section class="scanner" id="scanner">
-      <h1>See how your business appears online.</h1>
-      <p class="sub">BrandScanr uses AI to analyze your website and uncover opportunities to improve your brand, visibility, and customer experience.</p>
+      <h1>Point it at your website.</h1>
+      <p class="sub">We'll check your homepage for the technical and marketing basics that affect how customers find you — then explain what to fix first.</p>
 
       <form id="scan-form" class="scan-form">
         <input
@@ -34,7 +34,7 @@
           required
         />
         <button type="submit" id="scan-button">
-          <span class="btn-label">Analyze My Brand</span>
+          <span class="btn-label">Analyze My Business</span>
         </button>
       </form>
 
@@ -55,21 +55,19 @@
           </div>
         </div>
         <div class="score-meta">
-          <p class="score-label">Brand Health Score</p>
+          <p class="score-label">Marketing Health Score</p>
           <p id="score-url" class="score-url"></p>
           <p id="score-verdict" class="score-verdict"></p>
         </div>
       </div>
 
-      <div class="categories-grid" id="categories-grid"></div>
-
-      <div class="opportunities-panel">
-        <h2>Your Top Growth Opportunities</h2>
-        <div id="opportunities-list" class="opportunities-list"></div>
+      <div class="summary-panel">
+        <h2>What to fix first</h2>
+        <div id="summary-text" class="summary-text"></div>
       </div>
 
       <div class="checks-panel">
-        <h2>Full scan details</h2>
+        <h2>Full scan results</h2>
         <ul id="checks-list" class="checks-list"></ul>
       </div>
     </section>
