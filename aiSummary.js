@@ -1,5 +1,5 @@
 // aiSummary.js
-// Turns raw check results into a short, ranked list of "Growth Opportunities" â€”
+// Turns raw check results into a short, ranked list of "Growth Opportunities" —
 // the consultant-style recommendations shown on the dashboard.
 // Uses the Anthropic API if ANTHROPIC_API_KEY is set; otherwise falls back to a
 // rule-based ranking so the app still works out of the box.
@@ -60,7 +60,7 @@ Pick the top 5 FAILED items most worth fixing, ranked by business impact. For ea
 - "impact": one of "high", "medium", "low"
 - "why": 1-2 plain-English sentences on why it matters to customers or visibility (no technical jargon like "meta tags" or "schema")
 
-Write in plain sentences only. Do not use any markdown formatting â€” no asterisks, no ## headers, no bullet points, no bold or italics.
+Write in plain sentences only. Do not use any markdown formatting — no asterisks, no ## headers, no bullet points, no bold or italics.
 
 Respond with ONLY a JSON array, nothing else, in this exact shape:
 [{"title": "...", "impact": "high", "why": "..."}]`;
