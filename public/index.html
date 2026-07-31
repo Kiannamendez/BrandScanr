@@ -3,10 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrandScanr — Your website has blind spots. We find them.</title>
+  <title>BrandScanr — AI-Powered Website Audits for Small Business</title>
   <meta name="description" content="BrandScanr scans your website for the search, trust, and social signals that shape how customers find and judge your business — then tells you what to fix first." />
+
+  <!-- Open Graph / link previews -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://brandscanr.onrender.com/" />
+  <meta property="og:title" content="BrandScanr — Find what's quietly costing you customers." />
+  <meta property="og:description" content="Free AI-powered audit that checks your site's search visibility, trust signals, and social sharing — then tells you what to fix first." />
+  <meta property="og:image" content="https://brandscanr.onrender.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
+
+  <!-- Twitter/X card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BrandScanr — Find what's quietly costing you customers." />
+  <meta name="twitter:description" content="Free AI-powered audit that checks your site's search visibility, trust signals, and social sharing — then tells you what to fix first." />
+  <meta name="twitter:image" content="https://brandscanr.onrender.com/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
@@ -50,17 +65,17 @@
         <div class="hero-copy">
           <div class="eyebrow-pill">
             <span class="pulse-dot"></span>
-            <span>AI-powered auditing · Free while in beta</span>
+            <span>10 signals · 4 health categories · free while in beta</span>
           </div>
 
           <h1 class="hero-title">
-            Your website has<br />
-            <span class="serif-italic">blind spots.</span><br />
-            We find them.
+            Find what's quietly<br />
+            <span class="serif-italic">costing you</span> customers.
+            <span class="hero-title-sub">Not what you think is wrong. What's actually wrong.</span>
           </h1>
 
           <p class="hero-sub">
-            BrandScanr scans your website for the search, trust, and social signals that shape how customers find and judge your business — then tells you what to fix first, in plain English.
+            BrandScanr checks the search, trust, and social signals that shape how people find and judge your business — then tells you what to fix first, in plain English.
           </p>
 
           <form class="hero-form" id="scan-form">
@@ -84,7 +99,7 @@
 
           <p id="form-error" class="form-error" hidden></p>
 
-          <p class="hero-fine-print">No account required · Free while in beta · Results in seconds</p>
+          <p class="hero-fine-print">No account required · Results in under 10 seconds</p>
 
           <div class="hero-stats">
             <div class="stat">
@@ -103,40 +118,49 @@
         </div>
 
         <div class="hero-visual">
-          <div class="scan-visualizer">
-            <div class="browser-chrome">
-              <span class="dot dot-red"></span>
-              <span class="dot dot-amber"></span>
-              <span class="dot dot-green"></span>
-              <div class="chrome-url">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                  <circle cx="7" cy="7" r="4" stroke="#475569" stroke-width="1.5"/>
-                  <path d="M11 11l2.5 2.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-                <span>yoursite.com</span>
-                <span class="chrome-status">
-                  <span class="pulse-dot small"></span>
-                  SCANNING
-                </span>
+          <div class="panel">
+            <div class="panel-titlebar">
+              <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+              <div class="url-chip">🔒 acme-supply.co</div>
+              <div class="sample-tag">SAMPLE REPORT</div>
+            </div>
+            <div class="panel-body">
+              <div class="score-hero">
+                <div class="score-ring">
+                  <div class="score-ring-inner">72</div>
+                </div>
+                <div class="score-hero-text">
+                  <div class="site">Overall brand health</div>
+                  <div class="desc">Scanned 10 signals across 4 categories</div>
+                </div>
+              </div>
+
+              <div class="breakdown-row">
+                <span class="label">Search Visibility</span>
+                <div class="barwrap"><div class="bar" style="width:62%; background:#5FE3A6;"></div></div>
+                <span class="val">62</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="label">Website Experience</span>
+                <div class="barwrap"><div class="bar" style="width:78%; background:#5FE3A6;"></div></div>
+                <span class="val">78</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="label">Brand Trust</span>
+                <div class="barwrap"><div class="bar" style="width:85%; background:#5FE3A6;"></div></div>
+                <span class="val">85</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="label">Social Sharing</span>
+                <div class="barwrap"><div class="bar" style="width:45%; background:#E3A85F;"></div></div>
+                <span class="val">45</span>
+              </div>
+
+              <div class="fix-callout">
+                <div class="icon">!</div>
+                <div class="t"><strong>Fix first:</strong> your social preview tags are missing, so links you share on Slack, iMessage, and X show no title, image, or description.</div>
               </div>
             </div>
-            <div class="visualizer-body">
-              <div class="log-panel">
-                <div class="panel-header">
-                  <span>Audit log</span>
-                  <span class="mono accent" id="demo-progress">0%</span>
-                </div>
-                <div class="progress-track">
-                  <div class="progress-fill" id="demo-progress-fill"></div>
-                </div>
-                <div class="log-list" id="demo-log-list"></div>
-              </div>
-              <div class="metrics-panel">
-                <span class="panel-header-label">Score breakdown</span>
-                <div id="demo-metrics"></div>
-              </div>
-            </div>
-            <div class="scan-overlay-line" aria-hidden="true"></div>
           </div>
         </div>
       </div>

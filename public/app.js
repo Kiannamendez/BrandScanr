@@ -27,66 +27,6 @@ document.getElementById("nav-cta-btn").addEventListener("click", focusScanInput)
 document.getElementById("nav-cta-btn-mobile").addEventListener("click", focusScanInput);
 document.getElementById("cta-repeat-btn").addEventListener("click", focusScanInput);
 
-// ── Decorative hero "scanning" demo (illustrative only, not real data) ──
-const demoLogs = [
-  "Fetching homepage...",
-  "Checking search visibility...",
-  "Reading structured data...",
-  "Checking image accessibility...",
-  "Verifying secure connection...",
-  "Checking social preview tags...",
-];
-const demoMetrics = [
-  { label: "Search Visibility", value: 62, color: "#00e5a0" },
-  { label: "Website Experience", value: 78, color: "#00e5a0" },
-  { label: "Brand Trust", value: 85, color: "#00e5a0" },
-  { label: "Social Sharing", value: 45, color: "#f59e0b" },
-];
-
-const demoLogList = document.getElementById("demo-log-list");
-const demoMetricsEl = document.getElementById("demo-metrics");
-const demoProgressFill = document.getElementById("demo-progress-fill");
-const demoProgressText = document.getElementById("demo-progress");
-
-demoLogList.innerHTML = demoLogs
-  .map((log) => `<div class="log-item"><span class="log-dot"></span><span class="log-text">${log}</span></div>`)
-  .join("");
-demoMetricsEl.innerHTML = demoMetrics
-  .map(
-    (m) => `
-    <div class="metric">
-      <div class="metric-top">
-        <span class="metric-label">${m.label}</span>
-        <span class="metric-value" style="color:${m.color}">${m.value}</span>
-      </div>
-      <div class="metric-track"><div class="metric-fill" style="background:${m.color};width:0%"></div></div>
-    </div>`
-  )
-  .join("");
-
-let demoProgress = 0;
-let demoPhase = 0;
-const logItems = demoLogList.querySelectorAll(".log-item");
-const metricFills = demoMetricsEl.querySelectorAll(".metric-fill");
-
-setInterval(() => {
-  demoProgress = demoProgress >= 100 ? 0 : demoProgress + 1.2;
-  demoProgressFill.style.width = demoProgress + "%";
-  demoProgressText.textContent = Math.round(demoProgress) + "%";
-  metricFills.forEach((fill, i) => {
-    const target = demoMetrics[i].value;
-    fill.style.width = (demoProgress / 100) * target + "%";
-  });
-}, 40);
-
-setInterval(() => {
-  demoPhase = (demoPhase + 1) % logItems.length;
-  logItems.forEach((item, i) => {
-    item.classList.toggle("active", i === demoPhase);
-    item.classList.toggle("done", i < demoPhase);
-  });
-}, 1200);
-
 // ── Real audit pillars (matches audit.js exactly) ────────────
 const PILLARS = [
   {
