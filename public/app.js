@@ -32,7 +32,7 @@ const PILLARS = [
   {
     id: "search_visibility",
     label: "Search Visibility",
-    color: "#B03D1A",
+    color: "#00e5a0",
     description: "Whether search engines have what they need to show your homepage clearly — headline, description, and structured details.",
     checks: [
       "Search result headline",
@@ -45,21 +45,21 @@ const PILLARS = [
   {
     id: "website_experience",
     label: "Website Experience",
-    color: "#9C7A24",
+    color: "#f59e0b",
     description: "Whether visitors can quickly understand what you offer and whether your images are optimized.",
     checks: ["Homepage headline", "Image optimization"],
   },
   {
     id: "brand_trust",
     label: "Brand Trust",
-    color: "#8C7EB8",
+    color: "#a78bfa",
     description: "The small signals that tell a visitor your site is legitimate and safe to use.",
     checks: ["Secure connection", "Browser tab icon"],
   },
   {
     id: "social_sharing",
     label: "Social Sharing",
-    color: "#C4622E",
+    color: "#6366f1",
     description: "How your website looks when a link to it gets shared on Facebook or LinkedIn.",
     checks: ["Social media previews"],
   },
@@ -131,10 +131,10 @@ function verdictFor(score) {
   return "Significant gaps found — these are worth addressing soon.";
 }
 function scoreColor(score) {
-  if (score >= 85) return "#B03D1A";
-  if (score >= 65) return "#D8703F";
-  if (score >= 40) return "#9C7A24";
-  return "#B23A56";
+  if (score >= 85) return "#00e5a0";
+  if (score >= 65) return "#8ee6b8";
+  if (score >= 40) return "#f59e0b";
+  return "#ef4444";
 }
 function setLoading(isLoading) {
   button.disabled = isLoading;
