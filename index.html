@@ -3,75 +3,329 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrandScanr — Scan your business's online presence</title>
+  <title>BrandScanr — Your website has blind spots. We find them.</title>
+  <meta name="description" content="BrandScanr scans your website for the search, trust, and social signals that shape how customers find and judge your business — then tells you what to fix first." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <div class="scan-grid" aria-hidden="true"></div>
+  <div class="grid-line-bg" aria-hidden="true"></div>
 
-  <header class="topbar">
-    <div class="wordmark">
-      <span class="wordmark-icon">◎</span>
-      <span>BrandScanr</span>
+  <!-- ── Nav ─────────────────────────────────────────────── -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="brand">
+        <span class="brand-icon">◎</span>
+        <span>BrandScanr</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#pricing">Pricing</a>
+      </nav>
+
+      <div class="nav-cta">
+        <button type="button" class="btn btn-primary btn-sm" id="nav-cta-btn">Analyze My Brand</button>
+      </div>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
-    <p class="tagline">A marketing scan for your business, in plain English.</p>
+    <div class="nav-mobile" id="nav-mobile" hidden>
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <button type="button" class="btn btn-primary" id="nav-cta-btn-mobile">Analyze My Brand</button>
+    </div>
   </header>
 
   <main>
-    <section class="scanner" id="scanner">
-      <h1>Point it at your website.</h1>
-      <p class="sub">We'll check your homepage for the technical and marketing basics that affect how customers find you — then explain what to fix first.</p>
+    <!-- ── Hero ───────────────────────────────────────────── -->
+    <section class="hero" id="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow-pill">
+            <span class="pulse-dot"></span>
+            <span>AI-powered auditing · Free while in beta</span>
+          </div>
 
-      <form id="scan-form" class="scan-form">
-        <input
-          id="url-input"
-          type="text"
-          placeholder="sweettreatsbakery.com"
-          autocomplete="off"
-          spellcheck="false"
-          required
-        />
-        <button type="submit" id="scan-button">
-          <span class="btn-label">Analyze My Business</span>
-        </button>
-      </form>
+          <h1 class="hero-title">
+            Your website has<br />
+            <span class="serif-italic">blind spots.</span><br />
+            We find them.
+          </h1>
 
-      <p id="form-error" class="form-error" hidden></p>
-    </section>
+          <p class="hero-sub">
+            BrandScanr scans your website for the search, trust, and social signals that shape how customers find and judge your business — then tells you what to fix first, in plain English.
+          </p>
 
-    <section id="results" class="results" hidden>
-      <div class="score-panel">
-        <div class="gauge-wrap">
-          <svg id="gauge" viewBox="0 0 200 200" class="gauge">
-            <circle cx="100" cy="100" r="86" class="gauge-track" />
-            <circle cx="100" cy="100" r="86" class="gauge-fill" id="gauge-fill" />
-            <line x1="100" y1="100" x2="100" y2="24" class="gauge-sweep" id="gauge-sweep" />
-          </svg>
-          <div class="gauge-center">
-            <span id="score-number" class="score-number">--</span>
-            <span class="score-max">/ 100</span>
+          <form class="hero-form" id="scan-form">
+            <div class="input-wrap">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M13 13l-3-3m1-4A5 5 0 111 6a5 5 0 0110 0z" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <input
+                id="url-input"
+                type="text"
+                placeholder="https://yoursite.com"
+                autocomplete="off"
+                spellcheck="false"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary" id="scan-button">
+              <span class="btn-label">Run free audit →</span>
+            </button>
+          </form>
+
+          <p id="form-error" class="form-error" hidden></p>
+
+          <p class="hero-fine-print">No account required · Free while in beta · Results in seconds</p>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-value">10</div>
+              <div class="stat-label">signals checked</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">4</div>
+              <div class="stat-label">health categories</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">&lt;10s</div>
+              <div class="stat-label">to your report</div>
+            </div>
           </div>
         </div>
-        <div class="score-meta">
-          <p class="score-label">Marketing Health Score</p>
-          <p id="score-url" class="score-url"></p>
-          <p id="score-verdict" class="score-verdict"></p>
+
+        <div class="hero-visual">
+          <div class="scan-visualizer">
+            <div class="browser-chrome">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-amber"></span>
+              <span class="dot dot-green"></span>
+              <div class="chrome-url">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                  <circle cx="7" cy="7" r="4" stroke="#475569" stroke-width="1.5"/>
+                  <path d="M11 11l2.5 2.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span>yoursite.com</span>
+                <span class="chrome-status">
+                  <span class="pulse-dot small"></span>
+                  SCANNING
+                </span>
+              </div>
+            </div>
+            <div class="visualizer-body">
+              <div class="log-panel">
+                <div class="panel-header">
+                  <span>Audit log</span>
+                  <span class="mono accent" id="demo-progress">0%</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" id="demo-progress-fill"></div>
+                </div>
+                <div class="log-list" id="demo-log-list"></div>
+              </div>
+              <div class="metrics-panel">
+                <span class="panel-header-label">Score breakdown</span>
+                <div id="demo-metrics"></div>
+              </div>
+            </div>
+            <div class="scan-overlay-line" aria-hidden="true"></div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="summary-panel">
-        <h2>What to fix first</h2>
-        <div id="summary-text" class="summary-text"></div>
+    <!-- ── Real results (hidden until a scan runs) ───────────── -->
+    <section id="results" class="results" hidden>
+      <div class="section-inner">
+        <div class="section-eyebrow">Your report</div>
+        <h2 class="section-title">Brand Health Score</h2>
+
+        <div class="score-panel">
+          <div class="gauge-wrap">
+            <svg id="gauge" viewBox="0 0 200 200" class="gauge">
+              <circle cx="100" cy="100" r="86" class="gauge-track" />
+              <circle cx="100" cy="100" r="86" class="gauge-fill" id="gauge-fill" />
+              <line x1="100" y1="100" x2="100" y2="24" class="gauge-sweep" id="gauge-sweep" />
+            </svg>
+            <div class="gauge-center">
+              <span id="score-number" class="score-number">--</span>
+              <span class="score-max">/ 100</span>
+            </div>
+          </div>
+          <div class="score-meta">
+            <p id="score-url" class="score-url"></p>
+            <p id="score-verdict" class="score-verdict"></p>
+          </div>
+        </div>
+
+        <div class="categories-grid" id="categories-grid"></div>
+
+        <div class="opportunities-panel">
+          <h3>Your Top Growth Opportunities</h3>
+          <div id="opportunities-list" class="opportunities-list"></div>
+        </div>
+
+        <div class="checks-panel">
+          <h3>Full scan details</h3>
+          <ul id="checks-list" class="checks-list"></ul>
+        </div>
       </div>
+    </section>
 
-      <div class="checks-panel">
-        <h2>Full scan results</h2>
-        <ul id="checks-list" class="checks-list"></ul>
+    <!-- ── Audit Pillars ──────────────────────────────────── -->
+    <section id="features" class="pillars">
+      <div class="section-inner">
+        <span class="section-eyebrow">What we check today</span>
+        <h2 class="section-title">Four categories. One score.</h2>
+        <p class="section-sub">BrandScanr audits your homepage across four real categories right now. Accessibility and performance checks are on the roadmap.</p>
+
+        <div class="pillars-grid">
+          <div class="pillars-tabs" id="pillars-tabs"></div>
+          <div class="pillars-detail" id="pillars-detail"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── How It Works ───────────────────────────────────── -->
+    <section id="how-it-works" class="how">
+      <div class="section-inner">
+        <span class="section-eyebrow">Process</span>
+        <h2 class="section-title">From URL to report<br />in under a minute.</h2>
+
+        <div class="how-grid">
+          <div class="how-step">
+            <div class="how-num">1</div>
+            <h3>Enter your website</h3>
+            <p>Paste your homepage URL. No account, no setup.</p>
+          </div>
+          <div class="how-step">
+            <div class="how-num">2</div>
+            <h3>We scan the essentials</h3>
+            <p>BrandScanr checks your homepage across search visibility, website experience, trust signals, and social sharing.</p>
+          </div>
+          <div class="how-step">
+            <div class="how-num">3</div>
+            <h3>Get your Brand Health Score</h3>
+            <p>See what's working, what's not, and a ranked list of what to fix first — written in plain English.</p>
+          </div>
+          <div class="how-step">
+            <div class="how-num">4</div>
+            <h3>Fix it, then rescan</h3>
+            <p>There's no limit on scans. Fix what we find, then run it again anytime — it's free.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Testimonials (honest placeholder) ─────────────── -->
+    <section id="testimonials" class="testimonials">
+      <div class="section-inner">
+        <span class="section-eyebrow">Results</span>
+        <h2 class="section-title">We just launched.</h2>
+        <div class="testimonial-placeholder">
+          <p>BrandScanr is brand new — we haven't collected real customer stories yet. Run a scan, and if it's useful, we'd love to hear about it.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Pricing ────────────────────────────────────────── -->
+    <section id="pricing" class="pricing">
+      <div class="section-inner">
+        <span class="section-eyebrow">Pricing</span>
+        <h2 class="section-title">Straightforward.<br />No surprises.</h2>
+
+        <div class="pricing-grid">
+          <div class="price-card price-card-featured">
+            <div class="price-badge">Available now</div>
+            <div class="price-name" style="color:#00e5a0">Free</div>
+            <div class="price-amount"><span>Free</span></div>
+            <p class="price-desc">While BrandScanr is in beta.</p>
+            <div class="price-features">
+              <div class="price-feature"><span class="check-dot" style="background:#00e5a020;color:#00e5a0">✓</span>Unlimited scans</div>
+              <div class="price-feature"><span class="check-dot" style="background:#00e5a020;color:#00e5a0">✓</span>All 4 audit categories</div>
+              <div class="price-feature"><span class="check-dot" style="background:#00e5a020;color:#00e5a0">✓</span>AI-written recommendations</div>
+              <div class="price-feature"><span class="check-dot" style="background:#00e5a020;color:#00e5a0">✓</span>1 website</div>
+            </div>
+            <button type="button" class="btn btn-primary" id="pricing-free-btn">Start free</button>
+          </div>
+
+          <div class="price-card">
+            <div class="price-name" style="color:#6366f1">Growth</div>
+            <div class="price-amount"><span>Coming soon</span></div>
+            <p class="price-desc">For growing teams that need more.</p>
+            <div class="price-features">
+              <div class="price-feature muted"><span class="check-dot" style="background:#6366f120;color:#6366f1">✓</span>Multiple websites</div>
+              <div class="price-feature muted"><span class="check-dot" style="background:#6366f120;color:#6366f1">✓</span>Scheduled audits</div>
+              <div class="price-feature muted"><span class="check-dot" style="background:#6366f120;color:#6366f1">✓</span>Freshness monitoring</div>
+            </div>
+            <button type="button" class="btn btn-outline" disabled>Coming soon</button>
+          </div>
+
+          <div class="price-card">
+            <div class="price-name" style="color:#94a3b8">Enterprise</div>
+            <div class="price-amount"><span>Coming soon</span></div>
+            <p class="price-desc">For agencies and larger teams.</p>
+            <div class="price-features">
+              <div class="price-feature muted"><span class="check-dot" style="background:rgba(148,163,184,0.15);color:#94a3b8">✓</span>Unlimited websites</div>
+              <div class="price-feature muted"><span class="check-dot" style="background:rgba(148,163,184,0.15);color:#94a3b8">✓</span>Team sharing</div>
+              <div class="price-feature muted"><span class="check-dot" style="background:rgba(148,163,184,0.15);color:#94a3b8">✓</span>Priority support</div>
+            </div>
+            <button type="button" class="btn btn-outline" disabled>Coming soon</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA repeat ─────────────────────────────────────── -->
+    <section class="cta-repeat">
+      <div class="section-inner">
+        <div class="cta-box">
+          <div class="cta-glow" aria-hidden="true"></div>
+          <div class="cta-content">
+            <span class="section-eyebrow">Get started</span>
+            <h2 class="cta-title">Scan your site.<br /><span class="serif-italic accent-text">Today.</span> For free.</h2>
+            <p class="cta-sub">No credit card. No account setup. Just your URL and a few seconds.</p>
+            <button type="button" class="btn btn-primary" id="cta-repeat-btn">Scan my website →</button>
+          </div>
+        </div>
       </div>
     </section>
   </main>
+
+  <!-- ── Footer ──────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="section-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="brand">
+            <span class="brand-icon">◎</span>
+            <span>BrandScanr</span>
+          </div>
+          <p>AI-powered marketing audits for small businesses. Free while in beta.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col-label">Product</div>
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 BrandScanr</span>
+        <span>Built with Claude.</span>
+      </div>
+    </div>
+  </footer>
 
   <script src="/app.js"></script>
 </body>
