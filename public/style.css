@@ -19,9 +19,9 @@
   --border-soft: #ffffff14;
   --radius: 0.5rem;
 
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "Fraunces", serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-sans: "Instrument Sans", system-ui, sans-serif;
+  --font-serif: "DM Serif Display", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
 * { box-sizing: border-box; }
