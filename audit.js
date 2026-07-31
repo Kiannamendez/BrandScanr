@@ -1,6 +1,6 @@
 // audit.js
 // Fetches a website and runs a set of marketing/SEO health checks against it.
-// Each check returns: { id, label, passed, weight, detail }
+// Each check returns: { id, label, category, impact, action, passed, weight, detail }
 
 import * as cheerio from "cheerio";
 

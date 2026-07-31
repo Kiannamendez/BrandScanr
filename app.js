@@ -18,7 +18,7 @@ navMobile.querySelectorAll("a, button").forEach((el) => {
   });
 });
 
-// ── Scroll-to-scan helpers (nav CTA + bottom CTA + pricing) ──
+// ── Scroll-to-scan helpers (nav CTA + bottom CTA) ──
 function focusScanInput() {
   document.getElementById("hero").scrollIntoView({ behavior: "smooth", block: "start" });
   setTimeout(() => document.getElementById("url-input").focus(), 400);
@@ -26,7 +26,6 @@ function focusScanInput() {
 document.getElementById("nav-cta-btn").addEventListener("click", focusScanInput);
 document.getElementById("nav-cta-btn-mobile").addEventListener("click", focusScanInput);
 document.getElementById("cta-repeat-btn").addEventListener("click", focusScanInput);
-document.getElementById("pricing-free-btn").addEventListener("click", focusScanInput);
 
 // ── Decorative hero "scanning" demo (illustrative only, not real data) ──
 const demoLogs = [
