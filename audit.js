@@ -3,6 +3,8 @@
 // Each check returns: { id, label, category, impact, action, passed, weight, detail }
 
 import * as cheerio from "cheerio";
+import { normalizeUrl, safeFetch, isPublicHttpUrl } from "./fetchUtils.js";
+import { getImageSize } from "./imageSize.js";
 
 const CHECK_WEIGHT = 1; // every check counts equally for the MVP score
 
@@ -14,25 +16,103 @@ export const CATEGORIES = {
   social_sharing: "Social Sharing",
 };
 
-function normalizeUrl(input) {
-  let url = input.trim();
-  if (!/^https?:\/\//i.test(url)) {
-    url = "https://" + url;
-  }
-  return url;
+// Pulls out the human-readable parts of the homepage (what the business says
+// about itself) so Claude can write advice specific to *this* business.
+// None of this is scored; it's context for the AI report.
+function extractPageContext($, { title, metaDesc }) {
+  const clean = (t) => (t || "").replace(/\s+/g, " ").trim();
+  const uniq = (arr, max) => [...new Set(arr.map(clean).filter(Boolean))].slice(0, max);
+
+  // Business types the site declares about itself in its structured data
+  // (e.g. "Restaurant", "Dentist", "LocalBusiness", "Product").
+  const schemaTypes = [];
+  let schemaName = "";
+  $('script[type="application/ld+json"]').each((_, el) => {
+    try {
+      const data = JSON.parse($(el).contents().text());
+      const items = (Array.isArray(data) ? data : [data]).flatMap((d) => d?.["@graph"] || [d]);
+      for (const item of items) {
+        const t = item?.["@type"];
+        if (t) schemaTypes.push(...(Array.isArray(t) ? t : [t]));
+        // Take the name from the first item that describes the business itself,
+        // not the web page, breadcrumbs, images, etc.
+        if (!schemaName && typeof item?.name === "string" && t && !/WebSite|WebPage|Breadcrumb|ImageObject|SiteNavigation|SearchAction|Article|BlogPosting|FAQ|Question|VideoObject/i.test(String(t))) {
+          schemaName = item.name;
+        }
+      }
+    } catch {
+      // Malformed structured data: ignore it, it's only context.
+    }
+  });
+
+  const h1 = clean($("h1").first().text());
+  const subheadings = uniq($("h2, h3").map((_, el) => $(el).text()).get(), 8);
+  const navLinks = uniq($("nav a, header a").map((_, el) => $(el).text()).get(), 12);
+  const buttons = uniq(
+    $("button, a.btn, a.button, a[class*='btn'], a[class*='button'], input[type='submit']")
+      .map((_, el) => $(el).text() || $(el).attr("value"))
+      .get(),
+    8
+  );
+
+  // Visible page text, minus code and hidden bits, trimmed to a short excerpt.
+  const body = $("body").clone();
+  body.find("script, style, noscript, svg, iframe, template").remove();
+  body.find("*").append(" "); // keep words from separate elements apart
+  const textExcerpt = clean(body.find("main").text() || body.text()).slice(0, 2000);
+
+  return {
+    siteName: clean($('meta[property="og:site_name"]').attr("content")) || schemaName,
+    title,
+    description: metaDesc,
+    headline: h1,
+    subheadings,
+    navLinks,
+    buttons,
+    schemaTypes: uniq(schemaTypes.map(String), 6),
+    hasPhoneLink: $('a[href^="tel:"]').length > 0,
+    hasEmailLink: $('a[href^="mailto:"]').length > 0,
+    language: $("html").attr("lang") || "",
+    textExcerpt,
+  };
 }
 
-async function safeFetch(url, options = {}) {
-  try {
-    const res = await fetch(url, { redirect: "follow", ...options });
-    return res;
-  } catch (err) {
-    return null;
+// Checks the image a site shows when its link is shared on Facebook,
+// Instagram DMs, LinkedIn, iMessage, etc. We load it the way those apps would
+// and check it exists, is an image, and is big enough to show as a large card.
+const MIN_SHARE_W = 600;
+const MIN_SHARE_H = 315;
+const MAX_SHARE_BYTES = 8 * 1024 * 1024; // Facebook's limit
+
+async function inspectShareImage(imageUrl) {
+  const res = await safeFetch(imageUrl, { timeoutMs: 8000 });
+  if (!res || !res.ok) return { loads: false };
+  const type = res.headers.get("content-type") || "";
+  if (!type.startsWith("image/")) return { loads: false, notImage: true };
+
+  // Read just enough bytes to find the dimensions (and stop on huge files).
+  const reader = res.body.getReader();
+  const chunks = [];
+  let total = 0;
+  let size = null;
+  while (total < MAX_SHARE_BYTES) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+    total += value.length;
+    size = getImageSize(Buffer.concat(chunks));
+    if (size) break; // we have the dimensions, no need to download the rest
   }
+  reader.cancel().catch(() => {});
+  const declaredBytes = Number(res.headers.get("content-length")) || null;
+  return { loads: true, type, ...size, bytes: declaredBytes };
 }
 
 export async function runAudit(rawInput) {
   const url = normalizeUrl(rawInput);
+  if (!isPublicHttpUrl(url)) {
+    return { url, error: "Please enter a public website address, like yourbusiness.com." };
+  }
   const origin = new URL(url).origin;
 
   const homepageRes = await safeFetch(url);
@@ -134,6 +214,47 @@ export async function runAudit(rawInput) {
       : "When someone shares a link to your website on Facebook or LinkedIn, the preview may look broken, blank, or generic — which makes people less likely to click.",
   });
 
+  // --- Share image (link preview) ---
+  // Resolve relative image paths ("/img/share.png") against the page address.
+  let shareImageUrl = null;
+  try {
+    shareImageUrl = ogImage ? new URL(ogImage, homepageRes.url || url).href : null;
+  } catch {
+    shareImageUrl = null;
+  }
+  const shareImage = shareImageUrl ? await inspectShareImage(shareImageUrl) : null;
+  const declaredW = Number($('meta[property="og:image:width"]').attr("content")) || null;
+  const declaredH = Number($('meta[property="og:image:height"]').attr("content")) || null;
+  const shareW = shareImage?.width || declaredW;
+  const shareH = shareImage?.height || declaredH;
+  const bigEnough = shareW && shareH ? shareW >= MIN_SHARE_W && shareH >= MIN_SHARE_H : true;
+  const shareImagePassed = Boolean(shareImage?.loads && bigEnough);
+  checks.push({
+    id: "share_image",
+    label: "Share image",
+    category: "social_sharing",
+    impact: "medium",
+    action: "Add a share image that shows up when your link is posted",
+    passed: shareImagePassed,
+    weight: CHECK_WEIGHT,
+    detail: !shareImageUrl
+      ? "Your website doesn't name an image to show when someone shares your link on Facebook, Instagram messages, LinkedIn, or iMessage, so the preview shows no picture or a random one. Add a 1200×630 image, like your logo or storefront."
+      : !shareImage?.loads
+      ? "Your website names a share image, but we couldn't load it. When your link is shared, the preview will likely show no picture. Check the image address still works."
+      : !bigEnough
+      ? `Your share image is ${shareW}×${shareH} pixels. Facebook and LinkedIn show a small thumbnail instead of a big preview card for images under ${MIN_SHARE_W}×${MIN_SHARE_H}. 1200×630 works best.`
+      : `Your share image loads and is a good size${shareW ? ` (${shareW}×${shareH})` : ""} for a large preview card on Facebook, LinkedIn, and iMessage.`,
+  });
+
+  // What a shared link would look like, for the mock preview card.
+  const linkPreview = {
+    title: ogTitle || title || "",
+    description: ogDesc || metaDesc || "",
+    image: shareImage?.loads ? shareImageUrl : null,
+    domain: new URL(homepageRes.url || url).hostname.replace(/^www\./, ""),
+    usesFallbackText: !ogTitle || !ogDesc,
+  };
+
   // --- Schema / structured data ---
   const schemaBlocks = $('script[type="application/ld+json"]');
   checks.push({
@@ -231,6 +352,8 @@ export async function runAudit(rawInput) {
     score,
     categories,
     checks,
+    linkPreview,
+    pageContext: extractPageContext($, { title, metaDesc }),
     scannedAt: new Date().toISOString(),
   };
 }
