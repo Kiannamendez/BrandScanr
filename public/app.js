@@ -32,7 +32,7 @@ const PILLARS = [
   {
     id: "search_visibility",
     label: "Search Visibility",
-    color: "#00e5a0",
+    color: "#0a7d4c",
     description: "Whether search engines have what they need to show your homepage clearly — headline, description, and structured details.",
     checks: [
       "Search result headline",
@@ -45,21 +45,21 @@ const PILLARS = [
   {
     id: "website_experience",
     label: "Website Experience",
-    color: "#f59e0b",
+    color: "#c27a12",
     description: "Whether visitors can quickly understand what you offer and whether your images are optimized.",
     checks: ["Homepage headline", "Image optimization"],
   },
   {
     id: "brand_trust",
     label: "Brand Trust",
-    color: "#a78bfa",
+    color: "#7c5cd6",
     description: "The small signals that tell a visitor your site is legitimate and safe to use.",
     checks: ["Secure connection", "Browser tab icon"],
   },
   {
     id: "social_sharing",
     label: "Social Sharing",
-    color: "#6366f1",
+    color: "#4f46e5",
     description: "How your website looks when a link to it gets shared on Facebook or LinkedIn.",
     checks: ["Social media previews"],
   },
@@ -131,10 +131,10 @@ function verdictFor(score) {
   return "Significant gaps found — these are worth addressing soon.";
 }
 function scoreColor(score) {
-  if (score >= 85) return "#00e5a0";
-  if (score >= 65) return "#8ee6b8";
-  if (score >= 40) return "#f59e0b";
-  return "#ef4444";
+  if (score >= 85) return "#0a7d4c";
+  if (score >= 65) return "#1f9d63";
+  if (score >= 40) return "#c27a12";
+  return "#d4183d";
 }
 function setLoading(isLoading) {
   button.disabled = isLoading;
@@ -200,7 +200,7 @@ function renderResults(data) {
   requestAnimationFrame(tick);
 
   const offset = CIRCUMFERENCE * (1 - target / 100);
-  gaugeFill.style.stroke = scoreColor(target);
+  gaugeFill.style.stroke = target >= 65 ? "#5fe3a6" : scoreColor(target);
   gaugeFill.style.transition = "none";
   gaugeFill.style.strokeDashoffset = String(CIRCUMFERENCE);
   requestAnimationFrame(() => {
