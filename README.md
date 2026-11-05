@@ -18,7 +18,10 @@ structure — see `audit.js` for where new checks would go.
 brandscanr/
 ├── server.js         → the web server (Express)
 ├── audit.js           → the actual scanning/checking logic
-├── aiSummary.js        → turns findings into a written action plan
+├── aiSummary.js        → turns findings into a personalized written report (Claude)
+├── pagespeed.js        → Speed & Accessibility results from Google PageSpeed Insights
+├── fetchUtils.js       → safe website fetching (timeouts, blocks private addresses)
+├── imageSize.js        → reads share-image dimensions for the link preview check
 ├── public/
 │   ├── index.html      → the page itself
 │   ├── style.css        → styling
@@ -85,8 +88,10 @@ BrandScanr running. Try scanning a real website.
 
 ## 4. (Optional) Turn on AI-written summaries
 
-Right now, "What to fix first" is written from templates. To have Claude
-write a more natural, prioritized summary instead:
+Without a key, the report is written from templates. With a key, Claude
+reads the homepage, works out what kind of business it is, and writes a
+personalized summary plus 5 growth opportunities with a concrete first step
+for each:
 
 1. Get an API key at [console.anthropic.com](https://console.anthropic.com/settings/keys)
 2. In your project folder, copy `.env.example` to a new file called `.env`
@@ -102,6 +107,34 @@ will ignore it automatically.
 *(Want to use Gemini instead, per the original product doc? Swap the fetch
 call in `aiSummary.js` for the Gemini API — the rest of the app doesn't
 need to change.)*
+
+---
+
+## 4b. (Optional) Turn on Google speed & accessibility results
+
+This adds the **Speed & Accessibility** category, graded by Google
+PageSpeed Insights. It's free, but Google requires your own API key.
+
+1. Go to [console.cloud.google.com](https://console.cloud.google.com) and
+   create a project (no billing needed).
+2. **APIs & Services → Library** → search "PageSpeed Insights API" → **Enable**.
+3. **APIs & Services → Credentials → Create credentials → API key**.
+4. Click the new key → **API restrictions → Restrict key** → choose
+   PageSpeed Insights API → Save.
+5. Add it as `GOOGLE_API_KEY` in your `.env` (or in Render).
+
+Google's test takes 10–30 seconds, so this section loads in a moment after
+the main report. Its score is shown separately and doesn't change the
+Brand Health Score.
+
+### All settings
+
+| Variable | What it does |
+| --- | --- |
+| `ANTHROPIC_API_KEY` | Turns on Claude-written reports |
+| `ANTHROPIC_MODEL` | Optional. Defaults to `claude-sonnet-5-5` |
+| `GOOGLE_API_KEY` | Turns on the Speed & Accessibility category |
+| `SCAN_LIMIT_PER_HOUR` | Optional. Scans per visitor per hour (default 30) |
 
 ---
 
