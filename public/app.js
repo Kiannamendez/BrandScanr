@@ -33,7 +33,7 @@ const PILLARS = [
     id: "search_visibility",
     label: "Search Visibility",
     color: "#0a7d4c",
-    description: "Whether search engines have what they need to show your homepage clearly — headline, description, and structured details.",
+    description: "Whether search engines have what they need to show your homepage clearly: headline, description, and structured details.",
     checks: [
       "Search result headline",
       "Search result description",
@@ -150,7 +150,7 @@ function verdictFor(score) {
   if (score >= 85) return "Strong presence. A few refinements will sharpen it further.";
   if (score >= 65) return "Solid foundation, with clear opportunities to improve.";
   if (score >= 40) return "Several gaps are likely costing you visibility and customers.";
-  return "Significant gaps found — these are worth addressing soon.";
+  return "Significant gaps found. These are worth fixing soon.";
 }
 function scoreColor(score) {
   if (score >= 85) return "#0a7d4c";
@@ -179,7 +179,7 @@ function renderResults(data) {
   if (opportunities.length === 0) {
     const p = document.createElement("p");
     p.className = "no-opportunities";
-    p.textContent = "Every check on this scan passed — nice work. Re-run BrandScanr periodically to catch anything that changes.";
+    p.textContent = "Every check on this scan passed. Nice work. Re-run BrandScanr periodically to catch anything that changes.";
     opportunitiesList.appendChild(p);
   } else {
     opportunities.forEach((op, i) => {
@@ -411,3 +411,64 @@ form.addEventListener("submit", async (e) => {
     setLoading(false);
   }
 });
+
+// ── What's New popup ──────────────────────────────────────────
+// Shows once per visitor per release. Bump WN_VERSION to show it again
+// after the next round of features.
+(() => {
+  const WN_VERSION = "2026-11-speed-preview";
+  const WN_KEY = "brandscanr_whats_new_seen";
+  const backdrop = document.getElementById("whats-new");
+  if (!backdrop) return;
+  const modal = backdrop.querySelector(".wn-modal");
+  let lastFocus = null;
+
+  function seen() {
+    try { return localStorage.getItem(WN_KEY) === WN_VERSION; } catch { return false; }
+  }
+  function markSeen() {
+    try { localStorage.setItem(WN_KEY, WN_VERSION); } catch {}
+  }
+
+  function open() {
+    lastFocus = document.activeElement;
+    backdrop.hidden = false;
+    backdrop.classList.remove("closing");
+    // restart entrance animations if reopened
+    modal.querySelectorAll(".wn-item, .wn-confetti span").forEach((el) => {
+      el.style.animation = "none"; void el.offsetWidth; el.style.animation = "";
+    });
+    document.body.style.overflow = "hidden";
+    document.getElementById("wn-try").focus();
+  }
+
+  function close(after) {
+    markSeen();
+    backdrop.classList.add("closing");
+    setTimeout(() => {
+      backdrop.hidden = true;
+      backdrop.classList.remove("closing");
+      document.body.style.overflow = "";
+      if (typeof after === "function") after();
+      else if (lastFocus) lastFocus.focus();
+    }, 180);
+  }
+
+  document.getElementById("wn-close").addEventListener("click", close);
+  document.getElementById("wn-later").addEventListener("click", close);
+  document.getElementById("wn-try").addEventListener("click", () => close(focusScanInput));
+  backdrop.addEventListener("click", (e) => { if (e.target === backdrop) close(); });
+  document.addEventListener("keydown", (e) => {
+    if (backdrop.hidden) return;
+    if (e.key === "Escape") close();
+    if (e.key === "Tab") {
+      const f = modal.querySelectorAll("button");
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  document.querySelectorAll("[data-open-whats-new]").forEach((b) => b.addEventListener("click", open));
+
+  if (!seen()) setTimeout(open, 1200);
+})();
