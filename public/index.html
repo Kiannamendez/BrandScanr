@@ -103,11 +103,11 @@
 
           <div class="hero-stats">
             <div class="stat">
-              <div class="stat-value">10</div>
+              <div class="stat-value">15</div>
               <div class="stat-label">signals checked</div>
             </div>
             <div class="stat">
-              <div class="stat-value">4</div>
+              <div class="stat-value">5</div>
               <div class="stat-label">health categories</div>
             </div>
             <div class="stat">
@@ -131,7 +131,7 @@
                 </div>
                 <div class="score-hero-text">
                   <div class="site">Overall brand health</div>
-                  <div class="desc">Scanned 10 signals across 4 categories</div>
+                  <div class="desc">Scanned 15 signals across 5 categories</div>
                 </div>
               </div>
 
@@ -190,11 +190,51 @@
           </div>
         </div>
 
+        <div class="summary-panel" id="summary-panel" hidden>
+          <div class="summary-eyebrow">Your personalized summary</div>
+          <div class="business-chips" id="business-chips"></div>
+          <p id="summary-text" class="summary-text"></p>
+        </div>
+
         <div class="categories-grid" id="categories-grid"></div>
 
         <div class="opportunities-panel">
           <h3>Your Top Growth Opportunities</h3>
           <div id="opportunities-list" class="opportunities-list"></div>
+        </div>
+
+        <div class="preview-panel" id="preview-panel" hidden>
+          <h3>How your link looks when shared</h3>
+          <p class="panel-sub">A preview of what people see when your homepage is posted on Facebook, in Instagram messages, on LinkedIn, or in iMessage.</p>
+          <div class="link-card" id="link-card">
+            <div class="link-card-image" id="link-card-image"></div>
+            <div class="link-card-body">
+              <div class="link-card-domain" id="link-card-domain"></div>
+              <div class="link-card-title" id="link-card-title"></div>
+              <div class="link-card-desc" id="link-card-desc"></div>
+            </div>
+          </div>
+          <p class="panel-note" id="link-card-note" hidden></p>
+        </div>
+
+        <div class="speed-panel" id="speed-panel" hidden>
+          <div class="speed-head">
+            <h3>Speed &amp; Accessibility</h3>
+            <span class="source-tag">From Google PageSpeed Insights · mobile</span>
+          </div>
+          <div class="speed-loading" id="speed-loading">
+            <span class="spinner" aria-hidden="true"></span>
+            <span>Google is testing your homepage on a phone. This usually takes 10–30 seconds…</span>
+          </div>
+          <div id="speed-body" hidden>
+            <div class="speed-scores" id="speed-scores"></div>
+            <div id="speed-fixes-wrap" hidden>
+              <h4 class="speed-subhead">Google's top fixes</h4>
+              <div class="speed-fixes" id="speed-fixes"></div>
+            </div>
+            <p class="panel-note">This score comes from Google and is shown separately. It doesn't change your Brand Health Score.</p>
+          </div>
+          <p class="panel-note" id="speed-error" hidden></p>
         </div>
 
         <div class="checks-panel">
@@ -208,8 +248,8 @@
     <section id="features" class="pillars">
       <div class="section-inner">
         <span class="section-eyebrow">What we check today</span>
-        <h2 class="section-title">Four categories. One score.</h2>
-        <p class="section-sub">BrandScanr audits your homepage across four real categories right now. Accessibility and performance checks are on the roadmap.</p>
+        <h2 class="section-title">Five categories. One report.</h2>
+        <p class="section-sub">BrandScanr audits your homepage across four categories for your Brand Health Score, plus speed and accessibility results straight from Google PageSpeed Insights.</p>
 
         <div class="pillars-grid">
           <div class="pillars-tabs" id="pillars-tabs"></div>
