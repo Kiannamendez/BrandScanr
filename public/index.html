@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrandScanr | AI-Powered Website Audits</title>
-  <meta name="description" content="BrandScanr checks the search, trust, and social signals that shape how people find your business online, then gives you custom feedback on what to fix first." />
+  <title>BrandScanr | AI Website Audits for Marketers</title>
+  <meta name="description" content="BrandScanr audits any website for search, speed, trust, and social signals in under a minute, then gives marketers a prioritized list of what to fix first." />
 
   <!-- Open Graph / link previews -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://brandscanr.onrender.com/" />
-  <meta property="og:title" content="BrandScanr | AI-Powered Website Audits" />
-  <meta property="og:description" content="Free AI-powered audit that checks your site's search visibility, trust signals, and social sharing — then tells you what to fix first." />
+  <meta property="og:title" content="BrandScanr | AI Website Audits for Marketers" />
+  <meta property="og:description" content="Audit any website in under a minute. Search, speed, trust, and social checks with a prioritized fix list. Free in beta." />
   <meta property="og:image" content="https://brandscanr.onrender.com/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="627" />
 
   <!-- Twitter/X card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BrandScanr | AI-Powered Website Audits" />
-  <meta name="twitter:description" content="Free AI-powered audit that checks your site's search visibility, trust signals, and social sharing — then tells you what to fix first." />
+  <meta name="twitter:title" content="BrandScanr | AI Website Audits for Marketers" />
+  <meta name="twitter:description" content="Audit any website in under a minute. Search, speed, trust, and social checks with a prioritized fix list. Free in beta." />
   <meta name="twitter:image" content="https://brandscanr.onrender.com/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -38,10 +38,11 @@
       <nav class="nav-links" aria-label="Primary">
         <a href="#features">Features</a>
         <a href="#how-it-works">How It Works</a>
+        <button type="button" class="whats-new-link" data-open-whats-new>What&#39;s New <span class="new-dot"></span></button>
       </nav>
 
       <div class="nav-cta">
-        <button type="button" class="btn btn-primary btn-sm" id="nav-cta-btn">Analyze My Brand</button>
+        <button type="button" class="btn btn-primary btn-sm" id="nav-cta-btn">Run an Audit</button>
       </div>
 
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
@@ -53,7 +54,8 @@
     <div class="nav-mobile" id="nav-mobile" hidden>
       <a href="#features">Features</a>
       <a href="#how-it-works">How It Works</a>
-      <button type="button" class="btn btn-primary" id="nav-cta-btn-mobile">Analyze My Brand</button>
+      <button type="button" class="whats-new-link" data-open-whats-new>What&#39;s New <span class="new-dot"></span></button>
+      <button type="button" class="btn btn-primary" id="nav-cta-btn-mobile">Run an Audit</button>
     </div>
   </header>
 
@@ -65,17 +67,17 @@
         <div class="hero-copy">
           <div class="eyebrow-pill">
             <span class="pulse-dot"></span>
-            <span>AI-powered auditing · Free while in beta</span>
+            <span>AI website audits for marketers · Free in beta</span>
           </div>
 
           <h1 class="hero-title">
-            Your Website has<br />
-            <span class="serif-italic">opportunities.</span><br />
-            We find them.
+            Website audits<br />
+            in <span class="serif-italic">seconds.</span><br />
+            Not hours.
           </h1>
 
           <p class="hero-sub">
-            Think of it as a personal audit of your online presence. BrandScanr checks the search, trust, and social signals that shape how people find you — then hands you custom feedback on what to fix first, and why it matters.
+            Skip the manual audit. BrandScanr checks search, speed, trust, and social signals on any site, then writes a prioritized report you can take straight to a client or your team.
           </p>
 
           <form class="hero-form" id="scan-form">
@@ -99,7 +101,7 @@
 
           <p id="form-error" class="form-error" hidden></p>
 
-          <p class="hero-fine-print">No account required · Results in under 10 seconds</p>
+          <p class="hero-fine-print">Your site, a client&#39;s, or a prospect&#39;s · No account needed</p>
 
           <div class="hero-stats">
             <div class="stat">
@@ -111,7 +113,7 @@
               <div class="stat-label">health categories</div>
             </div>
             <div class="stat">
-              <div class="stat-value">&lt;10s</div>
+              <div class="stat-value">&lt;1 min</div>
               <div class="stat-label">to your report</div>
             </div>
           </div>
@@ -247,9 +249,9 @@
     <!-- ── Audit Pillars ──────────────────────────────────── -->
     <section id="features" class="pillars">
       <div class="section-inner">
-        <span class="section-eyebrow">What we check today</span>
+        <span class="section-eyebrow">What we check</span>
         <h2 class="section-title">Five categories. One report.</h2>
-        <p class="section-sub">BrandScanr audits your homepage across four categories for your Brand Health Score, plus speed and accessibility results straight from Google PageSpeed Insights.</p>
+        <p class="section-sub">Every scan covers search, experience, trust, and social for a Brand Health Score, plus speed and accessibility data straight from Google. Spot the gaps before your client does.</p>
 
         <div class="pillars-grid">
           <div class="pillars-tabs" id="pillars-tabs"></div>
@@ -267,23 +269,23 @@
         <div class="how-grid">
           <div class="how-step">
             <div class="how-num">1</div>
-            <h3>Enter your website</h3>
-            <p>Paste your homepage URL. No account, no setup.</p>
+            <h3>Drop in any URL</h3>
+            <p>Your site, a client&#39;s, or a prospect&#39;s. No login, no setup.</p>
           </div>
           <div class="how-step">
             <div class="how-num">2</div>
-            <h3>We scan the essentials</h3>
-            <p>BrandScanr checks your homepage across search visibility, website experience, trust signals, and social sharing.</p>
+            <h3>We run the checks</h3>
+            <p>Search, experience, trust, and social, plus speed and accessibility data from Google PageSpeed Insights.</p>
           </div>
           <div class="how-step">
             <div class="how-num">3</div>
-            <h3>Get your Brand Health Score</h3>
-            <p>See what's working, what's not, and a ranked list of what to fix first — written in plain English.</p>
+            <h3>Get a prioritized report</h3>
+            <p>A Brand Health Score, an AI summary, and a ranked fix list in plain English. Ready to share.</p>
           </div>
           <div class="how-step">
             <div class="how-num">4</div>
             <h3>Fix it, then rescan</h3>
-            <p>There's no limit on scans. Fix what we find, then run it again anytime — it's free.</p>
+            <p>Ship the fixes and run it again to show the before and after. Free while in beta.</p>
           </div>
         </div>
       </div>
@@ -296,9 +298,9 @@
           <div class="cta-glow" aria-hidden="true"></div>
           <div class="cta-content">
             <span class="section-eyebrow">Get started</span>
-            <h2 class="cta-title">Scan your site.<br /><span class="serif-italic accent-text">Today.</span> No fee.</h2>
-            <p class="cta-sub">No credit card. No account setup. Just your URL and a few seconds.</p>
-            <button type="button" class="btn btn-primary" id="cta-repeat-btn">Scan my website →</button>
+            <h2 class="cta-title">Your next audit<br />takes <span class="serif-italic accent-text">seconds.</span></h2>
+            <p class="cta-sub">Free while in beta. No credit card, no account. Just a URL.</p>
+            <button type="button" class="btn btn-primary" id="cta-repeat-btn">Run an audit →</button>
           </div>
         </div>
       </div>
@@ -314,7 +316,7 @@
             <span class="brand-icon">◎</span>
             <span>BrandScanr</span>
           </div>
-          <p>AI-powered marketing audits for small businesses. Free while in beta.</p>
+          <p>AI website audits for marketers. Free while in beta.</p>
         </div>
         <div class="footer-links">
           <div class="footer-col-label">Product</div>
@@ -328,6 +330,59 @@
       </div>
     </div>
   </footer>
+
+  <!-- ── What's New popup ───────────────────────────────── -->
+  <div class="wn-backdrop" id="whats-new" hidden>
+    <div class="wn-modal" role="dialog" aria-modal="true" aria-labelledby="wn-title">
+      <div class="wn-confetti" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <button type="button" class="wn-close" id="wn-close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="wn-head">
+        <span class="wn-pill"><span class="wn-spark">✦</span> New in BrandScanr</span>
+        <h2 id="wn-title" class="wn-title">Your audits just got <span class="serif-italic">smarter.</span></h2>
+        <p class="wn-sub">Three new checks, no extra work on your end.</p>
+      </div>
+
+      <ul class="wn-list">
+        <li class="wn-item">
+          <span class="wn-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 18a8 8 0 1 1 16 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 18l4-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18" r="1.6" fill="currentColor"/></svg>
+          </span>
+          <div>
+            <h3>Speed &amp; Accessibility</h3>
+            <p>Mobile speed, accessibility, and technical health scores from Google PageSpeed Insights, plus Google&#39;s top fixes in plain English.</p>
+          </div>
+        </li>
+        <li class="wn-item">
+          <span class="wn-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 11h5M18 8l3 3-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div>
+            <h3>Real visitor speed</h3>
+            <p>How fast the site loads for real people, from Google&#39;s Chrome data. Shown when a site has enough traffic.</p>
+          </div>
+        </li>
+        <li class="wn-item">
+          <span class="wn-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="2"/><path d="M3 14l4.5-4 4 3.5L15 10l6 5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          </span>
+          <div>
+            <h3>Link preview check</h3>
+            <p>See how a homepage looks when shared on Facebook, Instagram messages, LinkedIn, or iMessage, and whether the share image is the right size.</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="wn-actions">
+        <button type="button" class="btn btn-primary" id="wn-try">Try it on a site →</button>
+        <button type="button" class="wn-later" id="wn-later">Maybe later</button>
+      </div>
+    </div>
+  </div>
 
   <script src="/app.js"></script>
 </body>
